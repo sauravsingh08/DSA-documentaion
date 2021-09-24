@@ -1,0 +1,26 @@
+
+ques link:https://practice.geeksforgeeks.org/problems/minimize-the-heights3351/1
+
+
+ int getMinDiff(int arr[], int n, int k) 
+    {
+        // code here
+        
+        sort(arr, arr+n);
+        int res = arr[n-1] - arr[0];
+        
+        int mn = arr[0] + k;
+        int mx = arr[n-1] - k;
+        int i = 0;
+        while(arr[i] - k < 0) i++; // to avoid negative height after reduction 
+        
+        for(;i<n;i++)
+        {
+            int currmin = min(mn,arr[i]- k);
+            int currmax = max(mx,arr[i-1]+k);
+            
+            res = min(res,currmax-currmin);
+        }
+        
+        return res;
+    }
