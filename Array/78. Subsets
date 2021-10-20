@@ -1,0 +1,69 @@
+// bitset
+
+ vector<vector<int>> subsets(vector<int>& nums) {
+        int n = nums.size(), p = 1 << n;
+        vector<vector<int>> subs(p);
+        for (int i = 0; i < p; i++) {
+            for (int j = 0; j < n; j++) {
+                if ((i >> j) & 1) {
+                    subs[i].push_back(nums[j]);
+                }
+            }
+        }
+        return subs;
+    }
+    
+    //loop
+    
+     void subsetsUtil(vector<int>& nums, int index, vector<vector<int>> &ans, vector<int> &curr)
+    {
+            ans.push_back(curr);
+        
+        for(int i = index; i < nums.size(); i++)
+        {
+            curr.push_back(nums[i]);
+            subsetsUtil(nums,i+1, ans, curr);
+            curr.pop_back();
+            
+        }
+        
+        
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        
+        vector<vector<int>> ans;
+        vector<int> curr;
+        
+        subsetsUtil(nums,0,ans,curr);
+        
+        return ans;
+        
+        
+    }
+    
+    // recurssion without loop
+    
+     void subsetsUtil(vector<int>& nums, int index, vector<vector<int>>& res,vector<int> &temp)
+    {
+        if(index == nums.size())
+        {
+            res.push_back(temp);
+            return;
+        }
+            
+        
+    
+       
+            subsetsUtil(nums,index+1,res,temp);
+            temp.push_back(nums[index]);
+            subsetsUtil(nums,index+1,res,temp);
+            temp.pop_back();
+        
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+         
+        vector<vector<int>> res;
+        vector<int> temp;
+        subsetsUtil(nums,0,res,temp);
+        return res;
+    }
