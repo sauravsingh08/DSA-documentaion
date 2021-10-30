@@ -1,0 +1,42 @@
+
+class Solution {
+public:
+    
+    int util(string s, int index)
+    {
+       if(index == s.size())
+           return 1;
+        
+        if(s[index] == '0')
+            return 0;
+        
+        int res = util(s, index+1);
+        
+        if(index+1 < s.size() && (s[index] == '1'  || (s[index] == '2' && s[index+1] < '7' )))
+            res += util(s, index+2);
+        
+        return res;
+                
+    }
+    
+    int numDecodings(string s) {
+       // int count = 0;
+      //  return util(s, 0);
+       // return count;
+        int dp[s.size()+1];
+        memset(dp, 0, sizeof(dp));
+        dp[0] = 1;
+        dp[1] = (s[0] == '0') ? 0 : 1;
+        
+        for(int i = 2; i <= s.size(); i++)
+        {
+            if(s[i-1] > '0' )
+                dp[i] += dp[i-1];
+            if(s[i-2] == '1' || (s[i-2] == '2' && s[i-1] < '7'))
+                dp[i] += dp[i-2];
+        }
+        
+        
+        return dp[s.size()];
+    }
+};
