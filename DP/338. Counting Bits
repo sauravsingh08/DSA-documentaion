@@ -1,0 +1,16 @@
+// last bit of every odd number is always one and even number is always 0 so divding by 2 we are right shifting
+
+
+vector<int> countBits(int n) {
+        vector<int> res(n+1);
+        res[0] = 0;
+        for(int i = 1; i <= n;i++)
+        {
+            if(i%2==0)
+                res[i] = res[i/2];
+            else
+                res[i] = res[i/2]+1;
+        }
+        
+        return res;
+    }
