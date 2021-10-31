@@ -1,0 +1,52 @@
+// top - down approach
+
+  int coinChangeUtil(vector<int>& coins, int i, int j, vector<vector<int>> &dp)
+    {
+       if(j == coins.size() || i < 0)
+       {
+           return 10001;
+       }
+        
+        if(i == 0)
+            return 0;
+        
+        if(dp[i][j] != -1)
+            return dp[i][j];
+        
+       if(i >= coins[j])
+        return  dp[i][j]=min(1+coinChangeUtil(coins,i-coins[j],j,dp),
+            coinChangeUtil(coins,i,j+1,dp));
+        
+        else
+          return dp[i][j]=coinChangeUtil(coins,i,j+1,dp); 
+            
+        
+        
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        int index = coins.size();
+        vector<vector<int>> dp(amount+1,vector<int>(index+1,-1));
+     
+        int ans =  coinChangeUtil(coins,amount,0,dp);
+        return ans >= 10001 ? -1 : ans;
+    }
+    
+    
+    // bottom up
+    
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int>dp(amount+1,amount+1);
+        dp[0]=0;
+        
+        for(int i=1;i<=amount;i++)
+        {
+            for(int j=0;j<coins.size();j++)
+            {
+                if(i>=coins[j])
+                {
+                    dp[i]=min(dp[i],dp[i-coins[j]]+1);
+                }
+            }
+        }
+        return dp[amount]>amount?-1:dp[amount];
+    }
