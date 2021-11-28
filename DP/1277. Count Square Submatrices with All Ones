@@ -1,0 +1,25 @@
+// in table we are storing sqaures ending at that cell  
+class Solution {
+public:
+    int countSquares(vector<vector<int>>& matrix) {
+        
+        int m = matrix.size(), n = matrix[0].size();
+        vector<vector<int>> res = matrix;
+        
+        for(int i = 1; i < m; i++)
+            for(int j = 1; j < n; j++)
+            {
+                if(res[i][j] == 1)
+                res[i][j] = 1 + min({res[i-1][j],res[i][j-1],res[i-1][j-1]});
+            }
+        
+        int ans = 0;
+        for(int i = 0; i < m; i++)
+            for(int j = 0; j < n; j++)
+            {
+                ans +=res[i][j];
+            }
+        
+        return ans;
+    }
+};
